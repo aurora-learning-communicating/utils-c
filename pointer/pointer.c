@@ -3,10 +3,11 @@
 #include <assert.h>
 #include <string.h>
 
-struct Pointer pointer_init(void * ptr, FreeFn free_fn) {
+struct Pointer pointer_init(void * ptr, FreeFn free_fn, size_t element_size) {
     struct Pointer pointer = {
         .pointer = ptr,
         .free = free_fn,
+        .element_size = element_size
     };
 
     return pointer;

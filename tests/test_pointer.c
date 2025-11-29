@@ -11,7 +11,7 @@ int main() {
 
         ptr[0] = 10;
 
-        struct Pointer pointer = pointer_init(ptr, free);
+        struct Pointer pointer = pointer_init(ptr, free, sizeof(int));
 
         int * dest;
         struct LogTrace trace = CURRENT_LOGGING;
@@ -24,7 +24,7 @@ int main() {
     {
         int * ptr = NULL;
 
-        struct Pointer pointer = pointer_init(ptr, NULL);
+        struct Pointer pointer = pointer_init(ptr, NULL, sizeof(int));
 
         int * dest;
         struct LogTrace trace = CURRENT_LOGGING;
