@@ -1,19 +1,31 @@
 #include "optional.h"
+#include "array.h"
 #include "logs.h"
 #include <assert.h>
 #include <string.h>
 
-struct Optional optional_init(void * data, size_t element_size,
+struct Optional optional_init(size_t element_size,
                  void (*free_fn)(void *)) {
     struct Optional option = {
-        .is_present = data != NULL,
-        .data = data,
+        .is_present = false,
+        .data = NULL,
         .element_size = element_size,
         .free = free_fn
     };
     
     return option;
 }
+
+void optional_from(struct Optional * option, void * data) {
+    assert(option != NULL);
+    option -> data = data;
+    option -> is_present = data != NULL;
+
+    if (!option -> is_present) {
+        option -> free = NULL;
+    }
+}
+
 
 bool optional_is_present(struct Optional * option) {
     assert(option != NULL);
@@ -25,12 +37,16 @@ bool optional_is_empty(struct Optional * option) {
     return !(option->is_present);
 }
 
-void optional_get(struct Optional * option, void * ptr) {
+struct Array optional_get(struct Optional * option) {
     assert(option != NULL);
-    assert(ptr != NULL);
     assert(optional_is_present(option));
 
-    memcpy(ptr, option->data, option->element_size);
+    struct Array array = array_init(option -> data, option -> element_size, sizeof(char), NULL);
+
+    return array;
+    // *ptr = option -> data;
+    // memcpy(*ptr, option -> data, option -> element_size);
+    // memcpy(ptr, option->data, option->element_size);
 }
 
 void optional_free(struct Optional * option) {

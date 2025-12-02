@@ -3,7 +3,7 @@ project('safety-utils-c', 'c')
 fs = import('fs')
 
 includes = []
-modules = ['array', 'error', 'fileio', 'optional', 'pointer', 'result', 'syscall', 'logs']
+modules = ['array', 'error', 'fileio', 'optional', 'pointer', 'result', 'syscall', 'logs', 'list']
 intermediates = []
 
 foreach module: modules
